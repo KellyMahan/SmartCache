@@ -1,7 +1,7 @@
 module ActiveRecord
   
   class Base
-    include SimpleCache
+    include SmartCache
     EXPIRE_TIME = 10.minutes
     
     def update_attributes(attributes)
@@ -53,12 +53,12 @@ module ActiveRecord
   class Relation
     require 'digest/md5'
     
-    def clear_simple_cache
+    def clear_smart_cache
       cache_key = Digest::MD5.hexdigest(arel.to_sql)
       Rails.cache.write(cache_key, nil, :expires_in => 0.seconds)
     end
     
-    def simple_cache(ttl = nil)
+    def smart_cache(ttl = nil)
       return @records if loaded?
       cache_key = Digest::MD5.hexdigest(arel.to_sql)
       results = Rails.cache.read(cache_key)

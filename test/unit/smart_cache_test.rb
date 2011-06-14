@@ -2,13 +2,13 @@ require 'test_helper'
 
 
 #written within a test rails application
-class SimpleCacheTest < ActiveSupport::TestCase
+class SmartCacheTest < ActiveSupport::TestCase
   
   require 'digest/md5'
   
   test "long caching data" do
     time_to_live = 1.day
-    product = SimpleCache.block_cache("product_first", time_to_live) do
+    product = SmartCache.block_cache("product_first", time_to_live) do
       Product.first
     end
     assert product.is_a?(Product), "Returned item is not a Product"
@@ -18,7 +18,7 @@ class SimpleCacheTest < ActiveSupport::TestCase
   end
   
   test "caching data" do
-    cart = Cart.order(:id).simple_cache.first
+    cart = Cart.order(:id).smart_cache.first
     cart2 = Rails.cache.read(Digest::MD5.hexdigest(Cart.order(:id).to_sql)).first
     assert cart.is_a?(Cart), "Returned item is not cart"
     assert_equal cart2, cart

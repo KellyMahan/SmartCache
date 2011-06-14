@@ -1,4 +1,4 @@
-module SimpleCache
+module SmartCache
   
   VERSION = "0.0.1"
   
@@ -22,4 +22,4 @@ module SimpleCache
   
 end
 
-require 'simple_cache/active_record.rb'
+require 'smart_cache/active_record.rb'
